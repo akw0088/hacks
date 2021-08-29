@@ -206,6 +206,7 @@ int RunExe(char *szFileName)
 			// Get the image? Import? By? Name structure
 			lpImportByName = (PIMAGE_IMPORT_BY_NAME)((DWORD)pDosMem + lpImportNameArray[i].u1.AddressOfData);
 
+
 			// Determine whether to export function by sequence number or by function name
 			if (0x80000000 & lpImportNameArray[i].u1.Ordinal)
 			{
@@ -215,6 +216,7 @@ int RunExe(char *szFileName)
 			else
 			{
 				// Name export
+				printf("Importing function %s from DLL %s\r\n", lpImportByName->Name, lpDllName);
 				lpFuncAddress = GetProcAddress(hDll, (LPCSTR)lpImportByName->Name);
 			}
 			lpImportFuncAddrArray[i].u1.Function = (DWORD)lpFuncAddress;
